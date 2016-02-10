@@ -26,7 +26,6 @@ pot n Zero = Suc Zero
 pot n (Suc Zero) = n
 pot n (Suc m) = prod (pot n m) n
 
-
 {- Números DNat -}
 data DNat = Cero | D DNat | U DNat deriving Show
 
@@ -121,10 +120,10 @@ zToDNat n = sucDN $ zToDNat(n-1)
 prueba1 = suma (Suc $ Suc Zero) (suma (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
-prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
+--prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
-prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
+--prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
 
    --DNat
 --Debe dar: 31

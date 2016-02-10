@@ -31,7 +31,6 @@ data DNat = Cero | D DNat | U DNat deriving Show
 simplDN :: DNat -> DNat
 simplDN Cero  = Cero
 simplDN (U n) = U $ simplDN n
---simplDN (D Cero) = Cero
 simplDN (D n) = f $ D $ simplDN n where
 		f (D Cero) = Cero
 		f (D n) = D $ simplDN n

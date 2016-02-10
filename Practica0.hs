@@ -68,6 +68,8 @@ prodDN :: DNat->DNat->DNat
 
 --Transforma un entero positivo a su representación en DNat.
 zToDNat :: Int->DNat
+zToDNat 0 = Cero
+zToDNat n = sucDN $ zToDNat(n-1)
 
 
 {- Listas -}

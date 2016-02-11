@@ -16,11 +16,15 @@ suma Zero n = n
 suma (Suc n) m = Suc (suma n m)
 
 --Producto de naturales.
---prod::N->N->N
-
+prod::N->N->N
+prod Zero _ = Zero
+prod (Suc n) m = suma (prod n m) m
 
 --Potencia de naturales.
---pot::N->N->N
+pot::N->N->N
+pot n Zero = Suc Zero
+pot n (Suc Zero) = n
+pot n (Suc m) = prod (pot n m) n
 
 
 {- Números DNat -}
@@ -117,10 +121,10 @@ zToDNat n = sucDN $ zToDNat(n-1)
 prueba1 = suma (Suc $ Suc Zero) (suma (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
---prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
+prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
---prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
+prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
 
    --DNat
 --Debe dar: 31

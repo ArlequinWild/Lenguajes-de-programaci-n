@@ -60,6 +60,13 @@ dNToZ (U n) = 2 * (dNToZ n) + 1
 
 --Suma dos números DNat.
 sumaDN :: DNat->DNat->DNat
+sumaDN n m = simplDN $ f_suma n m where
+		f_suma n Cero = n
+		f_suma Cero n  = n
+		f_suma (D n) (U m) =  U $ f_suma n m
+		f_suma (D n) (D m) =  D $ f_suma n m
+		f_suma (U n) (D m) =  U $ f_suma n m
+		f_suma (U n) (U m) =  D $ sucDN $ f_suma n m
 
 
 --Multiplica dos números DNat.

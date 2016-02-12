@@ -71,6 +71,15 @@ sumaDN n m = simplDN $ f_suma n m where
 
 --Multiplica dos números DNat.
 prodDN :: DNat->DNat->DNat
+prodDN n m  = simplDN $ prod_aux n m where
+       	      prod_f Cero n = Cero
+       	      prod_f n Cero = Cero
+       	      prod_f (U Cero) n = n
+       	      prod_f n (U Cero) = n
+       	      prod_f (D n) (D m) = D $ D $ prodDN n m
+       	      prod_f (D n) (U m) = D $ sumaDN(D $ prodDN n m) n
+       	      prod_f (U n) (D m) = D $ sumaDN(D $ prodDN n m) m
+       	      prod_f (U n) (U m) = U $ sumaDN(sumaDN(D $ prodDN n m) n) m
 
 
 --Transforma un entero positivo a su representación en DNat.

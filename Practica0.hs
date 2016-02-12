@@ -117,7 +117,17 @@ unaVez (x:xs) = if cuantas x (x:xs) == 1 then x : unaVez (xs)
 
 
 {- Retos -}
---compress1::String->String
+-- axiliar limpia la cadena hasta encontrar blanco
+elimina::String->String
+elimina [] = []
+elimina (x:xs) = if x /= ' ' then elimina (xs)
+                             else xs   
+
+compress1::String->String
+compress1 [] = []
+compress1 (' ':xs) = if head xs == ' ' then compress1 (elimina(xs))
+                     else [head xs] ++ compress1 (elimina(xs))
+compress1 (x:xs) = [x] ++ compress1 (elimina(xs))
 
 
 --compress2::String->String
@@ -159,7 +169,7 @@ prueba11 = unaVez [1,2,3,1,3,3,32,6,8,5,8,0,1,2,6,0,7]
 
    --Retos
 --Debe dar: "AinacychaninswstliacaiabH"   
---prueba12 = compress1 "And its not a cry you can hear at night, its not somebody who's seen the light, its a cold and its a broken Hallelujah"   
+prueba12 = compress1 "And its not a cry you can hear at night, its not somebody who's seen the light, its a cold and its a broken Hallelujah"   
 
 --Debe dar: "acm1pt Sapbeeee!!!"
 {- prueba13 = compress2 $ "23"++(replicate 30 'a')++" 100"++(replicate 110 'c')++" 2abm"++" 4mjlo1u"++" 1001"++(replicate 1002 'p')++

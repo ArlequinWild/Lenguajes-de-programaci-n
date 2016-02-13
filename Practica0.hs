@@ -26,7 +26,6 @@ pot n Zero = Suc Zero
 pot n (Suc Zero) = n
 pot n (Suc m) = prod (pot n m) n
 
-
 {- Números DNat -}
 data DNat = Cero | D DNat | U DNat deriving Show
 
@@ -93,23 +92,42 @@ zToDNat n = sucDN $ zToDNat(n-1)
 
 {- Listas -}
 --Elimina repeticiones de una lista.
---toSet::Eq a=>[a]->[a]
-
+toSet::Eq a=>[a]->[a]
+toSet [] = []
+toSet (x:xs) = x:(filter (x/=) (toSet xs))
 
 --Cuenta el número de apariciones de un elemento en una lista.
---cuantas::Eq a=>a->[a]->Int
+cuantas::Eq a=>a->[a]->Int
+cuantas _ [] = 0
+cuantas x (y:ys) = if x == y then 1 + (cuantas x ys)
+                   else cuantas x ys
 
 
 --Cuentas las apariciones de cada elemento en la lista.
---frec::Eq a=>[a]->[(a,Int)]
+frec::Eq a=>[a]->[(a,Int)]
+frec [] = []
+frec (x:xs) = ((x, cuantas x (x:xs)): frec(filter (x/=) (xs)))
 
 
 --Nos da los elementos que aparecen una sola vez.
---unaVez::Eq a=>[a]->[a]
+unaVez::Eq a=>[a]->[a]
+unaVez [] = []
+unaVez (x:xs) = if cuantas x (x:xs) == 1 then x : unaVez (xs)
+                else unaVez(filter (x/=) (xs))
 
 
 {- Retos -}
---compress1::String->String
+-- axiliar limpia la cadena hasta encontrar blanco
+elimina::String->String
+elimina [] = []
+elimina (x:xs) = if x /= ' ' then elimina (xs)
+                             else xs   
+
+compress1::String->String
+compress1 [] = []
+compress1 (' ':xs) = if head xs == ' ' then compress1 (elimina(xs))
+                     else [head xs] ++ compress1 (elimina(xs))
+compress1 (x:xs) = [x] ++ compress1 (elimina(xs))
 
 
 --compress2::String->String
@@ -121,10 +139,10 @@ zToDNat n = sucDN $ zToDNat(n-1)
 prueba1 = suma (Suc $ Suc Zero) (suma (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
-prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
+--prueba2 = prod (Suc $ Suc Zero) (prod (Suc $ Suc $ Suc $ Suc Zero) (Suc Zero))
 
 --Debe dar: Suc (Suc (Suc (Suc (Suc (Suc (Suc (Suc Zero)))))))
-prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
+--prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zero))
 
    --DNat
 --Debe dar: 31
@@ -138,20 +156,20 @@ prueba3 = pot (suma (Suc Zero) (Suc Zero)) (prod (Suc Zero) (Suc $ Suc $ Suc Zer
 
    --Listas    
 --Debe dar: [1,2,3,32,4,6,8,5,0]
---prueba8 = toSet [1,2,3,1,3,3,32,2,4,6,8,5,8,0,1,2,6,0,0,3,2,4,6,2,32]
+prueba8 = toSet [1,2,3,1,3,3,32,2,4,6,8,5,8,0,1,2,6,0,0,3,2,4,6,2,32]
 
 --Debe dar: 4
---prueba9 = cuantas 1 [1,2,3,1,3,3,32,2,4,6,8,5,8,0,1,2,6,0,0,3,2,4,6,2,1]
+prueba9 = cuantas 1 [1,2,3,1,3,3,32,2,4,6,8,5,8,0,1,2,6,0,0,3,2,4,6,2,1]
 
 --Debe dar: [(1,3),(2,2),(3,3),(32,1),(6,2),(8,2),(5,1),(0,2)]
---prueba10 = frec [1,2,3,1,3,3,32,6,8,5,8,0,1,2,6,0]
+prueba10 = frec [1,2,3,1,3,3,32,6,8,5,8,0,1,2,6,0]
 
 --Debe dar: [32,5,7]
---prueba11 = unaVez [1,2,3,1,3,3,32,6,8,5,8,0,1,2,6,0,7]
+prueba11 = unaVez [1,2,3,1,3,3,32,6,8,5,8,0,1,2,6,0,7]
 
    --Retos
 --Debe dar: "AinacychaninswstliacaiabH"   
---prueba12 = compress1 "And its not a cry you can hear at night, its not somebody who's seen the light, its a cold and its a broken Hallelujah"   
+prueba12 = compress1 "And its not a cry you can hear at night, its not somebody who's seen the light, its a cold and its a broken Hallelujah"   
 
 --Debe dar: "acm1pt Sapbeeee!!!"
 {- prueba13 = compress2 $ "23"++(replicate 30 'a')++" 100"++(replicate 110 'c')++" 2abm"++" 4mjlo1u"++" 1001"++(replicate 1002 'p')++

@@ -74,7 +74,7 @@ sumaDN n m = simplDN $ f_suma n m where
 
 --Multiplica dos números DNat.
 prodDN :: DNat->DNat->DNat
-prodDN n m  = simplDN $ prod_aux n m where
+prodDN n m  = simplDN $ prod_f n m where
        	      prod_f Cero n = Cero
        	      prod_f n Cero = Cero
        	      prod_f (U Cero) n = n
